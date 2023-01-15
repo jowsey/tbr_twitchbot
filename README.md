@@ -2,6 +2,8 @@
 
 The Twitch chatbot end of ![jowsey/TwitchBattleRoyale](https://github.com/jowsey/TwitchBattleRoyale).
 
+---
+
 Uses ![pnpm](https://pnpm.io), set up with `pnpm install` & run with `pnpm start`.
 
 Expects tokens from the ![Twitch dev console](https://dev.twitch.tv/console/) and the ![Twitch CLI](https://github.com/twitchdev/twitch-cli).  
