@@ -1,27 +1,25 @@
 {
   "name": "twitchproxy",
-  "type": "module",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "license": "ISC",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@twurple/api": "^5.3.3",
     "@twurple/auth": "^5.3.3",
     "@twurple/chat": "^5.3.3",
-    "@types/better-sqlite3": "^7.6.3",
-    "@types/node": "^18.11.18",
-    "@types/tmi.js": "^1.8.2",
-    "@types/ws": "^8.5.4",
     "better-sqlite3": "^8.0.1",
     "dotenv": "^16.0.3",
-    "tmi.js": "^1.8.5",
-    "typescript": "^4.9.4",
     "ws": "^8.12.0"
-  }
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.3",
+    "@types/node": "^18.11.18",
+    "@types/ws": "^8.5.4",
+    "typescript": "^4.9.4"
+  },
+  "packageManager": "pnpm@7.25.0"
 }

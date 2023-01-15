@@ -5,7 +5,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import { RefreshingAuthProvider } from "@twurple/auth";
-// import { ApiClient } from "@twurple/api";
 import { ChatClient } from "@twurple/chat";
 
 import { WebSocketServer } from "ws";
@@ -68,7 +67,6 @@ const authProvider = new RefreshingAuthProvider(
 );
 
 const chatClient = new ChatClient({ authProvider, channels: [process.env.CHANNEL_NAME!] });
-// const apiClient = new ApiClient({ authProvider });
 
 chatClient.onRegister(() => {
   console.log("Connected as", chatClient.currentNick);

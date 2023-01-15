@@ -1,32 +1,28 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@twurple/api': ^5.3.3
   '@twurple/auth': ^5.3.3
   '@twurple/chat': ^5.3.3
   '@types/better-sqlite3': ^7.6.3
   '@types/node': ^18.11.18
-  '@types/tmi.js': ^1.8.2
   '@types/ws': ^8.5.4
   better-sqlite3: ^8.0.1
   dotenv: ^16.0.3
-  tmi.js: ^1.8.5
   typescript: ^4.9.4
   ws: ^8.12.0
 
 dependencies:
-  '@twurple/api': 5.3.3_@twurple+auth@5.3.3
   '@twurple/auth': 5.3.3
   '@twurple/chat': 5.3.3_@twurple+auth@5.3.3
-  '@types/better-sqlite3': 7.6.3
-  '@types/node': 18.11.18
-  '@types/tmi.js': 1.8.2
-  '@types/ws': 8.5.4
   better-sqlite3: 8.0.1
   dotenv: 16.0.3
-  tmi.js: 1.8.5
-  typescript: 4.9.4
   ws: 8.12.0
+
+devDependencies:
+  '@types/better-sqlite3': 7.6.3
+  '@types/node': 18.11.18
+  '@types/ws': 8.5.4
+  typescript: 4.9.4
 
 packages:
 
@@ -64,10 +60,6 @@ packages:
 
   /@d-fischer/deprecate/2.0.2:
     resolution: {integrity: sha512-wlw3HwEanJFJKctwLzhfOM6LKwR70FPfGZGoKOhWBKyOPXk+3a9Cc6S9zhm6tka7xKtpmfxVIReGUwPnMbIaZg==}
-    dev: false
-
-  /@d-fischer/detect-node/3.0.1:
-    resolution: {integrity: sha512-0Rf3XwTzuTh8+oPZW9SfxTIiL+26RRJ0BRPwj5oVjZFyFKmsj9RGfN2zuTRjOuA3FCK/jYm06HOhwNK+8Pfv8w==}
     dev: false
 
   /@d-fischer/escape-string-regexp/5.0.0:
@@ -145,24 +137,6 @@ packages:
       - encoding
     dev: false
 
-  /@twurple/api/5.3.3_@twurple+auth@5.3.3:
-    resolution: {integrity: sha512-GmTEUVbH2fmQP60Q7TkKsmprKPWMV1Bu52RAc3agQIeyDcKLxCgT/GuUC3qAv+UBOpnH8IKIFQj0RbKMI/tJBw==}
-    peerDependencies:
-      '@twurple/auth': 5.3.3
-    dependencies:
-      '@d-fischer/cache-decorators': 3.0.0
-      '@d-fischer/detect-node': 3.0.1
-      '@d-fischer/logger': 4.2.0
-      '@d-fischer/rate-limiter': 0.6.2
-      '@d-fischer/shared-utils': 3.5.0
-      '@twurple/api-call': 5.3.3
-      '@twurple/auth': 5.3.3
-      '@twurple/common': 5.3.3
-      tslib: 2.4.1
-    transitivePeerDependencies:
-      - encoding
-    dev: false
-
   /@twurple/auth/5.3.3:
     resolution: {integrity: sha512-fsQlD+Q/iWbXq7Q8wHOtzTI5kc+zZlUHnmUQDJ9SQYz4yLsiQIFOvP4toYCVg70tm1Mr2XM9pPWGXK5O1AKaMQ==}
     dependencies:
@@ -207,7 +181,7 @@ packages:
     resolution: {integrity: sha512-YS64N9SNDT/NAvou3QNdzAu3E2om/W/0dhORimtPGLef+zSK5l1vDzfsWb4xgXOgfhtOI5ZDTRxnvRPb22AIVQ==}
     dependencies:
       '@types/node': 18.11.18
-    dev: false
+    dev: true
 
   /@types/node-fetch/2.6.2:
     resolution: {integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==}
@@ -230,17 +204,11 @@ packages:
 
   /@types/node/18.11.18:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
-    dev: false
-
-  /@types/tmi.js/1.8.2:
-    resolution: {integrity: sha512-meCZPCqs8zuCvw8Wl+0UXy2D6L/31Vskc99B/dZeQtIZvzX3EEzWSLTmRRxwI36m5hQFi3xjoLcnmEL8hBPqHA==}
-    dev: false
 
   /@types/ws/8.5.4:
     resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
     dependencies:
       '@types/node': 18.11.18
-    dev: false
 
   /array.prototype.map/1.0.5:
     resolution: {integrity: sha512-gfaKntvwqYIuC7mLLyv2wzZIJqrRhn5PZ9EfFejSx6a78sV7iDsGpG9P+3oUPtm1Rerqm6nrKS4FYuTIvWfo3g==}
@@ -765,18 +733,6 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /node-fetch/2.6.8:
-    resolution: {integrity: sha512-RZ6dBYuj8dRSfxpUSu+NsdF1dpPpluJxwOp+6IoDp/sH2QNDSvurYsAa+F1WxY2RjA1iP93xhcsUoYbF2XBqVg==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: false
-
   /object-inspect/1.12.3:
     resolution: {integrity: sha512-geUvdk7c+eizMNUDkRpW1wJwgfOiOeHbxBR/hLXK1aT6zmVSO0jsQcs7fj6MGw89jC/cjGfLcNOrtMYtGqm81g==}
     dev: false
@@ -950,18 +906,6 @@ packages:
       readable-stream: 3.6.0
     dev: false
 
-  /tmi.js/1.8.5:
-    resolution: {integrity: sha512-A9qrydfe1e0VWM9MViVhhxVgvLpnk7pFShVUWePsSTtoi+A1X+Zjdoa7OJd7/YsgHXGj3GkNEvnWop/1WwZuew==}
-    engines: {node: '>=10.0.0'}
-    dependencies:
-      node-fetch: 2.6.8
-      ws: 8.12.0
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - utf-8-validate
-    dev: false
-
   /tr46/0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
     dev: false
@@ -988,7 +932,7 @@ packages:
     resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: false
+    dev: true
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
