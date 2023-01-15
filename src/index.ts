@@ -1,91 +1,144 @@
-import * as dotenv from "dotenv";
-import { existsSync, writeFileSync } from "fs";
+import { PlayerDetails } from "./PlayerDetails.js";
+import { TokensRow } from "./TokensRow";
 
+import * as dotenv from "dotenv";
 dotenv.config();
 
-import tmi, { ChatUserstate } from "tmi.js";
+import { RefreshingAuthProvider } from "@twurple/auth";
+// import { ApiClient } from "@twurple/api";
+import { ChatClient } from "@twurple/chat";
 
 import { WebSocketServer } from "ws";
-import { PlayerDetails } from "./PlayerDetails.js";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import Database from "better-sqlite3";
 
 if (!existsSync(".env")) {
-  writeFileSync(".env", '# https://dev.twitch.tv/console\nBOT_USERNAME=""\nBOT_TOKEN=""\nCHANNEL_NAME=""');
+  writeFileSync(
+    ".env",
+    '# https://dev.twitch.tv/console\nBOT_USERNAME=""\nCHANNEL_NAME=""\n\nCLIENT_ID=""\nCLIENT_SECRET=""\n'
+  );
   throw new Error("No .env file found - an empty file has been created, please fill it!");
 }
 
-const client = new tmi.client({
-  identity: {
-    username: process.env.BOT_USERNAME,
-    password: "oauth:" + process.env.BOT_TOKEN,
-  },
-  channels: [process.env.CHANNEL_NAME!],
-});
+if (!existsSync("./db/")) {
+  mkdirSync("./db/");
+}
 
-client.on("connected", (address: string, port: number) => {
-  console.log("Connected to " + address + ":" + port + " as " + client.getUsername());
-});
+const db = new Database("./db/twitchproxy.db");
+db.pragma("journal_mode = WAL");
+
+db.prepare(
+  "CREATE TABLE IF NOT EXISTS tokens (access_token TEXT, refresh_token TEXT, expires_in INTEGER, obtainment_timestamp INTEGER)"
+).run();
+
+db.prepare(
+  "INSERT OR IGNORE INTO tokens (access_token, refresh_token, expires_in, obtainment_timestamp) VALUES (NULL, NULL, NULL, NULL)"
+).run();
+
+const tokens: TokensRow = db.prepare("SELECT * FROM tokens").get();
+
+if (tokens === undefined) {
+  throw new Error("Please add initial tokens to database");
+}
 
 let isRoundIntermission = true;
 let isRoundInProgress = false;
 
 let playersQueuedForRound: PlayerDetails[] = [];
 
-client.on("message", async (channel: string, user: ChatUserstate, message: string, self: boolean) => {
-  if (self) return;
+const authProvider = new RefreshingAuthProvider(
+  {
+    clientId: process.env.CLIENT_ID!,
+    clientSecret: process.env.CLIENT_SECRET!,
+    onRefresh: (token) => {
+      db.prepare("UPDATE tokens SET access_token = ?, refresh_token = ?, expires_in = ?, obtainment_timestamp = ?").run(
+        token.accessToken,
+        token.refreshToken,
+        token.expiresIn,
+        token.obtainmentTimestamp
+      );
+    },
+  },
+  {
+    refreshToken: tokens.refresh_token,
+    accessToken: tokens.access_token,
+    expiresIn: tokens.expires_in,
+    obtainmentTimestamp: tokens.obtainment_timestamp,
+  }
+);
 
+const chatClient = new ChatClient({ authProvider, channels: [process.env.CHANNEL_NAME!] });
+// const apiClient = new ApiClient({ authProvider });
+
+chatClient.onRegister(() => {
+  console.log("Connected as", chatClient.currentNick);
+});
+
+chatClient.onMessage(async (channel, user, message, msg) => {
   if (
     (isRoundIntermission || isRoundInProgress) &&
     (message.toLowerCase() === "!play" || message.toLowerCase() === "play" || message.toLowerCase() === "! play")
   ) {
-    if (playersQueuedForRound.map((p) => p.name).includes(user.username!)) {
+    if (playersQueuedForRound.map((p) => p.name).includes(user)) {
       if (isRoundIntermission) {
-        await client.say(channel, `@${user.username} already in this round cmonBruh`);
+        await chatClient.say(channel, `already in this round cmonBruh`, { replyTo: msg.id });
       } else if (isRoundInProgress) {
-        await client.say(channel, `@${user.username} already queued for next round cmonBruh`);
+        await chatClient.say(channel, `already queued for next round cmonBruh`, { replyTo: msg.id });
       }
     } else {
       if (isRoundIntermission) {
-        await client.say(channel, `@${user.username} joining this round :)`);
+        await chatClient.say(channel, `joining this round :)`, { replyTo: msg.id });
       } else if (isRoundInProgress) {
-        await client.say(channel, `@${user.username} joining next round ResidentSleeper`);
+        await chatClient.say(channel, `joining next round ResidentSleeper`, { replyTo: msg.id });
       }
 
-      playersQueuedForRound.push({
-        name: user.username!,
-        userId: user["user-id"]!,
-        color: user.color!,
-      });
+      var player = {
+        name: user!,
+        userId: msg.userInfo.userId!,
+        color: msg.userInfo.color!,
+      };
+
+      playersQueuedForRound.push(player);
+
+      wss.clients.forEach((c) => c.send(JSON.stringify({ event: "player", player })));
     }
   }
 });
 
+await chatClient.connect();
+
 const wss = new WebSocketServer({ port: 1949 });
 
 wss.on("connection", (ws) => {
+  // if someone somehow manages to !play before the map launched
+  if (playersQueuedForRound.length > 0) {
+    ws.send(
+      JSON.stringify({
+        event: "catchup",
+        players: playersQueuedForRound,
+      })
+    );
+  }
+
   ws.on("message", (data) => {
     console.log("recieved", data.toString());
 
     let d = JSON.parse(data.toString());
-    if (d.event == "beginIntermission") {
-      isRoundInProgress = false;
-      isRoundIntermission = true;
-    }
 
-    if (d.event == "beginRound") {
-      isRoundIntermission = false;
-      isRoundInProgress = true;
+    switch (d.event) {
+      case "beginIntermission": {
+        isRoundInProgress = false;
+        isRoundIntermission = true;
+        break;
+      }
 
-      console.log("sending lobby of", playersQueuedForRound.length, "players to game");
-      ws.send(
-        JSON.stringify({
-          event: "lobby",
-          users: playersQueuedForRound,
-        })
-      );
+      case "beginRound": {
+        isRoundIntermission = false;
+        isRoundInProgress = true;
 
-      playersQueuedForRound = [];
+        playersQueuedForRound = [];
+        break;
+      }
     }
   });
 });
-
-await client.connect();

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node ."
   },
@@ -11,9 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@twurple/api": "^5.3.3",
+    "@twurple/auth": "^5.3.3",
+    "@twurple/chat": "^5.3.3",
+    "@types/better-sqlite3": "^7.6.3",
     "@types/node": "^18.11.18",
     "@types/tmi.js": "^1.8.2",
     "@types/ws": "^8.5.4",
+    "better-sqlite3": "^8.0.1",
     "dotenv": "^16.0.3",
     "tmi.js": "^1.8.5",
     "typescript": "^4.9.4",
