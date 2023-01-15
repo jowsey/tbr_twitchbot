@@ -4,7 +4,6 @@ import { existsSync, writeFileSync } from "fs";
 dotenv.config();
 
 import tmi, { ChatUserstate } from "tmi.js";
-import { updateClassDeclaration } from "typescript";
 
 import { WebSocketServer } from "ws";
 import { PlayerDetails } from "./PlayerDetails.js";
