@@ -1,0 +1,98 @@
+lockfileVersion: 5.4
+
+specifiers:
+  '@types/node': ^18.11.18
+  '@types/tmi.js': ^1.8.2
+  '@types/ws': ^8.5.4
+  dotenv: ^16.0.3
+  tmi.js: ^1.8.5
+  typescript: ^4.9.4
+  ws: ^8.12.0
+
+dependencies:
+  '@types/node': 18.11.18
+  '@types/tmi.js': 1.8.2
+  '@types/ws': 8.5.4
+  dotenv: 16.0.3
+  tmi.js: 1.8.5
+  typescript: 4.9.4
+  ws: 8.12.0
+
+packages:
+
+  /@types/node/18.11.18:
+    resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
+    dev: false
+
+  /@types/tmi.js/1.8.2:
+    resolution: {integrity: sha512-meCZPCqs8zuCvw8Wl+0UXy2D6L/31Vskc99B/dZeQtIZvzX3EEzWSLTmRRxwI36m5hQFi3xjoLcnmEL8hBPqHA==}
+    dev: false
+
+  /@types/ws/8.5.4:
+    resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
+    dependencies:
+      '@types/node': 18.11.18
+    dev: false
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /node-fetch/2.6.8:
+    resolution: {integrity: sha512-RZ6dBYuj8dRSfxpUSu+NsdF1dpPpluJxwOp+6IoDp/sH2QNDSvurYsAa+F1WxY2RjA1iP93xhcsUoYbF2XBqVg==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
+    dependencies:
+      whatwg-url: 5.0.0
+    dev: false
+
+  /tmi.js/1.8.5:
+    resolution: {integrity: sha512-A9qrydfe1e0VWM9MViVhhxVgvLpnk7pFShVUWePsSTtoi+A1X+Zjdoa7OJd7/YsgHXGj3GkNEvnWop/1WwZuew==}
+    engines: {node: '>=10.0.0'}
+    dependencies:
+      node-fetch: 2.6.8
+      ws: 8.12.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /tr46/0.0.3:
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+    dev: false
+
+  /typescript/4.9.4:
+    resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: false
+
+  /webidl-conversions/3.0.1:
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+    dev: false
+
+  /whatwg-url/5.0.0:
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
+    dependencies:
+      tr46: 0.0.3
+      webidl-conversions: 3.0.1
+    dev: false
+
+  /ws/8.12.0:
+    resolution: {integrity: sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
