@@ -90,7 +90,7 @@ chatClient.onMessage(async (channel, user, message, msg) => {
         await chatClient.say(channel, `joining next round ResidentSleeper`, { replyTo: msg.id });
       }
 
-      var player = {
+      let player = {
         name: user!,
         userId: msg.userInfo.userId!,
         color: msg.userInfo.color!,
@@ -119,7 +119,7 @@ wss.on("connection", (ws) => {
   }
 
   ws.on("message", (data) => {
-    console.log("recieved", data.toString());
+    console.log("received", data.toString());
 
     let d = JSON.parse(data.toString());
 
